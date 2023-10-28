@@ -3,4 +3,5 @@ This is a fork of [st](https://st.suckless.org/) from [suckless.org](https://suc
 
 ## Changes:
 - changed the default font size,
-- applied the scrollback patch (Shift+PageUp/PageDown).
+- applied the scrollback patch (Shift+PageUp/PageDown),
+- color changes.
