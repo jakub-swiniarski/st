@@ -14,15 +14,15 @@ LIBS = -L$(X11LIB) -lm -lrt -lX11 -lutil -lXft \
        `$(PKG_CONFIG) --libs fontconfig` \
        `$(PKG_CONFIG) --libs freetype2`
 
-STCPPFLAGS = -DVERSION=\"$(VERSION)\" -D_XOPEN_SOURCE=600
-STCFLAGS = $(INCS) $(STCPPFLAGS) $(CPPFLAGS) $(CFLAGS)
-STLDFLAGS = $(LIBS) $(LDFLAGS)
+CPPFLAGS = -DVERSION=\"$(VERSION)\" -D_XOPEN_SOURCE=600
+CFLAGS = $(INCS) $(CPPFLAGS) -O2
+LDFLAGS = $(LIBS)
 
 SRC = st.c x.c
 OBJ = $(SRC:.c=.o)
 
 .c.o:
-	$(CC) $(STCFLAGS) -c $<
+	$(CC) $(CFLAGS) -c $<
 
 st.o: config.h st.h win.h
 x.o: arg.h config.h st.h win.h
@@ -30,7 +30,7 @@ x.o: arg.h config.h st.h win.h
 $(OBJ): config.h
 
 st: $(OBJ)
-	$(CC) -o $@ $(OBJ) $(STLDFLAGS)
+	$(CC) -o $@ $(OBJ) $(LDFLAGS)
 
 clean:
 	rm -f st $(OBJ)
