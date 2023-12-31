@@ -1,11 +1,25 @@
 .POSIX:
 
-include config.mk
+VERSION = 0.9
+
+X11INC = /usr/X11R6/include
+X11LIB = /usr/X11R6/lib
+
+PKG_CONFIG = pkg-config
+
+INCS = -I$(X11INC) \
+       `$(PKG_CONFIG) --cflags fontconfig` \
+       `$(PKG_CONFIG) --cflags freetype2`
+LIBS = -L$(X11LIB) -lm -lrt -lX11 -lutil -lXft \
+       `$(PKG_CONFIG) --libs fontconfig` \
+       `$(PKG_CONFIG) --libs freetype2`
+
+STCPPFLAGS = -DVERSION=\"$(VERSION)\" -D_XOPEN_SOURCE=600
+STCFLAGS = $(INCS) $(STCPPFLAGS) $(CPPFLAGS) $(CFLAGS)
+STLDFLAGS = $(LIBS) $(LDFLAGS)
 
 SRC = st.c x.c
 OBJ = $(SRC:.c=.o)
-
-all: st
 
 .c.o:
 	$(CC) $(STCFLAGS) -c $<
@@ -13,30 +27,19 @@ all: st
 st.o: config.h st.h win.h
 x.o: arg.h config.h st.h win.h
 
-$(OBJ): config.h config.mk
+$(OBJ): config.h
 
 st: $(OBJ)
 	$(CC) -o $@ $(OBJ) $(STLDFLAGS)
 
 clean:
-	rm -f st $(OBJ) st-$(VERSION).tar.gz
-
-dist: clean
-	mkdir -p st-$(VERSION)
-	cp -R LICENSE Makefile README.md config.mk\
-		config.h st.info arg.h st.h win.h $(SRC)\
-		st-$(VERSION)
-	tar -cf - st-$(VERSION) | gzip > st-$(VERSION).tar.gz
-	rm -rf st-$(VERSION)
+	rm -f st $(OBJ)
 
 install: st
-	mkdir -p $(DESTDIR)$(PREFIX)/bin
-	cp -f st $(DESTDIR)$(PREFIX)/bin
-	chmod 755 $(DESTDIR)$(PREFIX)/bin/st
+	cp -f st /usr/local/bin
 	tic -sx st.info
-	@echo Please see the README file regarding the terminfo entry of st.
 
 uninstall:
-	rm -f $(DESTDIR)$(PREFIX)/bin/st
+	rm -f /usr/local/bin/st
 
-.PHONY: all clean dist install uninstall
+.PHONY: clean install uninstall
