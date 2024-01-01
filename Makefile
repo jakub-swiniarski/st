@@ -1,7 +1,5 @@
 .POSIX:
 
-VERSION = 0.9
-
 X11INC = /usr/X11R6/include
 X11LIB = /usr/X11R6/lib
 
@@ -14,7 +12,7 @@ LIBS = -L$(X11LIB) -lm -lrt -lX11 -lutil -lXft \
        `$(PKG_CONFIG) --libs fontconfig` \
        `$(PKG_CONFIG) --libs freetype2`
 
-CPPFLAGS = -DVERSION=\"$(VERSION)\" -D_XOPEN_SOURCE=600
+CPPFLAGS = -D_XOPEN_SOURCE=600
 CFLAGS = $(INCS) $(CPPFLAGS) -O2
 LDFLAGS = $(LIBS)
 
