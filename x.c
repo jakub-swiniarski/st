@@ -2070,9 +2070,6 @@ main(int argc, char *argv[])
 	case 'w':
 		opt_embed = EARGF(usage());
 		break;
-	case 'v':
-		die("%s " VERSION "\n", argv0);
-		break;
 	default:
 		usage();
 	} ARGEND;
