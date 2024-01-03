@@ -2,6 +2,7 @@
 #include <errno.h>
 #include <fcntl.h>
 #include <limits.h>
+#include <pty.h>
 #include <pwd.h>
 #include <stdarg.h>
 #include <stdio.h>
@@ -18,14 +19,6 @@
 
 #include "st.h"
 #include "win.h"
-
-#if   defined(__linux)
- #include <pty.h>
-#elif defined(__OpenBSD__) || defined(__NetBSD__) || defined(__APPLE__)
- #include <util.h>
-#elif defined(__FreeBSD__) || defined(__DragonFly__)
- #include <libutil.h>
-#endif
 
 /* Arbitrary sizes */
 #define UTF_INVALID   0xFFFD
