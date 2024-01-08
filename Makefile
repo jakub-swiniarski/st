@@ -23,7 +23,7 @@ OBJ = $(SRC:.c=.o)
 	$(CC) $(CFLAGS) -c $<
 
 st.o: config.h st.h win.h
-x.o: arg.h config.h st.h win.h
+x.o: config.h st.h win.h
 
 $(OBJ): config.h
 
