@@ -22,13 +22,13 @@ OBJ = $(SRC:.c=.o)
 .c.o:
 	$(CC) $(CFLAGS) -c $<
 
+st: $(OBJ)
+	$(CC) -o $@ $(OBJ) $(LDFLAGS)
+
 st.o: config.h st.h win.h
 x.o: config.h st.h win.h
 
 $(OBJ): config.h
-
-st: $(OBJ)
-	$(CC) -o $@ $(OBJ) $(LDFLAGS)
 
 clean:
 	rm -f st $(OBJ)
